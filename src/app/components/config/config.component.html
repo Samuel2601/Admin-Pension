@@ -1,0 +1,180 @@
+<app-sidebar></app-sidebar>
+<ng-container *ngIf="(rol!=undefined && rol=='direc')||yo==1">
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+          <div class="col-Perú2 col-lg-10 col-xl-8">
+
+            <!-- Header -->
+            <div class="header mt-md-5">
+              <div class="header-body">
+                <div class="row align-items-center">
+                  <div class="col">
+
+                    <!-- Pretitle -->
+                    <h6 class="header-pretitle">
+                      Módulo
+                    </h6>
+
+                    <!-- Title -->
+                    <h1 class="header-title">
+                        Configuraciones
+                    </h1>
+
+                  </div>
+                </div> <!-- / .row -->
+      
+              </div>
+            </div>
+
+            <!-- Alert -->
+            <div class="alert alert-danger" *ngIf="bol!=''">
+              <i class="fe fe-info mr-1"></i> {{bol}}
+            </div>
+
+            <!-- Card -->
+            <form #actualizarForm="ngForm" (ngSubmit)="actualizar(actualizarForm)">
+              <div class="card">
+                <div class="card-header">
+  
+                  <!-- Title -->
+                  <h4 class="card-header-title">
+                    Configuraciones de las Pensiones
+                  </h4>
+  
+                </div>
+  
+                <div class="card-body" *ngIf="!load_data">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <h4 class="card-header-title">
+                               Mese de cobro: {{config.numpension}}
+                            </h4>
+                    
+                            <hr>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="row mb-3">
+                      <label for="inputEmail3" class="col-sm-2 col-form-label">Monto Matricula</label>
+                      <div class="col-sm-6">
+                        <input type="number" step="0.01"class="form-control" name="matricula" [(ngModel)]="config.matricula">
+                      </div>
+                  </div>
+                  <div class="row mb-3">
+                      <label for="inputEmail3" class="col-sm-2 col-form-label">Monto Pensión</label>
+                      <div class="col-sm-6">
+                        <input type="number" step="0.01"class="form-control" name="pension" [(ngModel)]="config.pension">
+                      </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Fecha de Año Lectivo</label>
+                    <div class="col-sm-6">
+                      {{auxdate|date:'longDate'}} {{auxdate|date:'fullTime'}}
+                      <input type="datetime-local" class="form-control" name="anio_lectivo" [(ngModel)]="config.anio_lectivo">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="inputEmail3" class="col-sm-2 col-form-label">Mes de cobro completo</label>
+                  <div class="col-sm-6">
+                    
+                    <select  class="form-control custom-select" id="select-mescompleto" required name="mescompleto" [(ngModel)]="config.mescompleto"> 
+                      <option value="" selected disabled>Seleccionar</option>
+                      <option value="{{item.date}}" *ngFor="let item of arr_meses"> {{item.date|date:'MMMM'}}</option>
+                    </select>
+                    ({{auxmescompleto|date:'MMMM'}})
+                  </div>
+              </div>
+
+                
+                    
+                
+                    
+                </div>
+                <ng-container *ngIf="load_data">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-12 text-center">
+                          <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                            <span class="visually-hidden"></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </ng-container>
+                <div class="card-footer">
+
+                    <button *ngIf="!load_btn" class="btn btn-primary btn-shadow" type="button" data-toggle="modal" [attr.data-target]="'#modalConfirmar'" >Iniciar</button>
+                           
+                    <button disabled *ngIf="load_btn" type="button" class="btn btn-primary btn-shadow">
+                        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        En Proceso...
+                    </button>
+
+                    <div class="modal fade" id="modalConfirmar"  style="display: none;" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title">Iniciar</h4>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                          </div>
+                          <div class="modal-body">
+                            <p>¿Desea Iniciar?</p>
+                           <b><i> este proceso no se podrá iniciar hasta que transcurra 10 meses</i></b>
+                          </div>
+                          <div class="modal-footer">
+                            <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
+                            <button class="btn btn-primary btn-shadow btn-sm" type="submit">Si</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>        
+                    
+                    
+                </div>
+              </div>
+            </form>
+              
+
+          </div>
+        </div> <!-- / .row -->
+      </div>
+</div>
+</ng-container>
+<ng-container  *ngIf="rol!=undefined && rol!='direc' && yo==0">
+  <div class="card">
+    <div class="card-body">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-5 col-xl-4 my-5">
+          
+          <div class="text-center">
+          
+            <!-- Preheading -->
+            <h6 class="text-uppercase text-muted mb-4">
+              404 error
+            </h6>
+
+            <!-- Heading -->
+            <h1 class="display-4 mb-3">
+              Está página no se cuentra habilitada 😭
+            </h1>
+
+            <!-- Subheading -->
+            <p class="text-muted mb-4">
+              ¿Parece que llegaste aquí por accidente?
+            </p>
+
+            <!-- Button -->
+            <a [routerLink]="['/estudiantes']"  class="btn btn-lg btn-primary">
+              Regresar a pagos
+            </a>
+          
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
